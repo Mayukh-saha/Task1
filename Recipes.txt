@@ -1,7 +1,75 @@
-Welcome 
+package testPackage1;
 
-First line 
-second line
-Third line
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 
-Optional line.
+public class TestCsv {
+
+	public static void main(String[] args) {
+		String csvFile1 = "C:\\Users\\mayukh.saha\\Desktop\\TestFile\\Sample1.csv";
+		String csvFile2 = "C:\\Users\\mayukh.saha\\Desktop\\TestFile\\Sample2.csv";
+        BufferedReader br1 = null;
+        BufferedReader br2 = null;
+        String line = "";
+        String cvsSplitBy = ",";
+        String[] data1 = null;
+        String[] data2 = null;
+        ArrayList<String> valuesInSheetOne = new ArrayList<String>();
+        ArrayList<String> valuesInSheetTwo = new ArrayList<String>();
+        int iteration = 0;
+
+        try {
+
+        	 // For first file:-
+        	br1 = new BufferedReader(new FileReader(csvFile1));
+            while ((line = br1.readLine()) != null) {
+                // use comma as separator
+                data1 = line.split(cvsSplitBy);
+                for (String s: data1) {           
+                	valuesInSheetOne.add(s);
+                }
+            }
+            
+         // For second file:-
+            br2 = new BufferedReader(new FileReader(csvFile2));
+            while ((line = br2.readLine()) != null) {
+                // use comma as separator
+                data2 = line.split(cvsSplitBy);
+                for (String s: data2) {           
+                	valuesInSheetTwo.add(s);
+                }
+            }
+            
+            for (String value : valuesInSheetOne) {
+                if(valuesInSheetOne.get(iteration).compareToIgnoreCase(valuesInSheetTwo.get(iteration)) != 0) {
+                    System.out.printf("%-7s%-6s%-7s\n",valuesInSheetOne.get(iteration), " --> ", valuesInSheetTwo.get(iteration));
+                }else {
+                }
+                iteration++;
+            }
+            
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if (br1 != null) {
+                try {
+                    br1.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }if (br2 != null) {
+                try {
+                    br2.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+	}
+
+}
